@@ -7,14 +7,33 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'modules' => [
+        'api' => [
+            'class' => 'app\modules\api\Api',
+        ],
+    ],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
         'request' => [
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'AIsDT6QpO1vpMW6MNJXX7hSK5KPqe33L',
+        ],
+        'response' => [
+            // ...
+            'formatters' => [
+                \yii\web\Response::FORMAT_JSON => [
+                    'class' => 'yii\web\JsonResponseFormatter',
+                    'prettyPrint' => YII_DEBUG, // используем "pretty" в режиме отладки
+                    'encodeOptions' => JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE,
+                    // ...
+                ],
+            ],
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -43,14 +62,22 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
+
         'urlManager' => [
             'enablePrettyUrl' => true,
+            'enableStrictParsing' => false,
             'showScriptName' => false,
             'rules' => [
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => [
+                        'api/news',
+                        'api/authors',
+                        'api/categories',
+                        ],
+                ],
             ],
         ],
-        */
     ],
     'params' => $params,
 ];

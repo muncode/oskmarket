@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'preview:ntext',
             'content:ntext',
             'author_id',
-            //'category_id',
+            'category_id',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

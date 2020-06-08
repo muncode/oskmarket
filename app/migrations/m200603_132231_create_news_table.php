@@ -18,7 +18,7 @@ class m200603_132231_create_news_table extends Migration
             'preview' => $this->text(),
             'content' => $this->text(),
             'author_id' => $this->integer(),
-            'category_id' => $this->integer()
+            'category_id' => $this->integer(),
         ]);
     }
 
