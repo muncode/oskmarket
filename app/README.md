@@ -1,233 +1,83 @@
-<p align="center">
-    <a href="https://github.com/yiisoft" target="_blank">
-        <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
-    </a>
-    <h1 align="center">Yii 2 Basic Project Template</h1>
-    <br>
-</p>
+http://beee.zzz.com.ua/oskmarket/app/web/
 
-Yii 2 Basic Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-rapidly creating small projects.
+Описание
 
-The template contains the basic features including user login/logout and a contact page.
-It includes all commonly used configurations that would allow you to focus on adding new
-features to your application.
+Необходимо создать упрощенную версию новостного каталога
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/yiisoft/yii2-app-basic.svg)](https://packagist.org/packages/yiisoft/yii2-app-basic)
-[![Total Downloads](https://img.shields.io/packagist/dt/yiisoft/yii2-app-basic.svg)](https://packagist.org/packages/yiisoft/yii2-app-basic)
-[![Build Status](https://travis-ci.com/yiisoft/yii2-app-basic.svg?branch=master)](https://travis-ci.com/yiisoft/yii2-app-basic)
+Наш каталог будет содержать 3 вида объектов:
+    • Новость
+    • Рубрика
+    • Авторы
 
-DIRECTORY STRUCTURE
--------------------
+Новость
 
-      assets/             contains assets definition
-      commands/           contains console commands (controllers)
-      config/             contains application configurations
-      controllers/        contains Web controller classes
-      mail/               contains view files for e-mails
-      models/             contains model classes
-      runtime/            contains files generated during runtime
-      tests/              contains various tests for the basic application
-      vendor/             contains dependent 3rd-party packages
-      views/              contains view files for the Web application
-      web/                contains the entry script and Web resources
+Представляет собой объект новости и должен содержать следующую информацию:
 
+    • Заголовок
+    • Анонс
+    • Текст
+    • Может быть написана только 1 автором
+    • Может относиться к нескольким рубрикам
 
+Автор
 
-REQUIREMENTS
-------------
+Содержит в себе как минимум информацию о конкретном авторе, а именно:
+    • ФИО автора
+    • аватар автора
+    • подпись автора
 
-The minimum requirement by this project template that your Web server supports PHP 5.6.0.
+Рубрика
 
+Рубрики позволяют классифицировать новостные материалы в каталоге. Имеют название и могут в древовидном виде вкладываться друг в друга. В простом случае реализации уровень вложенности будет 2-3 рубрики, в сложном - произвольный. Вот пример возможных рубрик и их иерархии:
 
-INSTALLATION
-------------
+    • Общество
+        ◦ городская жизнь
+        ◦ выборы
+    • День города
+        ◦ салюты
+        ◦ детская площадка
+            ▪ 0-3 года
+            ▪ 3-7 года
+    • Спорт
+……
 
-### Install via Composer
+Функции каталога
 
-If you do not have [Composer](http://getcomposer.org/), you may install it by following the instructions
-at [getcomposer.org](http://getcomposer.org/doc/00-intro.md#installation-nix).
+Взаимодействие с пользователем происходит посредством HTTP запросов к API серверу. Все ответы представляют собой JSON объекты. Сервер реализует следующие методы:
+    • выдача всех новостей конкретного автора
+    • выдача списка всех новостей, которые относятся к указанной рубрике
+    • выдача списка авторов
+    • выдача информации о статьях по их идентификаторам
 
-You can then install this project template using the following command:
+    • искать новости по рубрике, включая дочерние
+    • искать новости по рубрике, не включая дочерние
+    • поиск новости по названию
+    • рубрикатор каталога сделать с произвольным уровнем вложенности рубрик друг в друга
 
-~~~
-composer create-project --prefer-dist yiisoft/yii2-app-basic basic
-~~~
 
-Now you should be able to access the application through the following URL, assuming `basic` is the directory
-directly under the Web root.
+Задание
 
-~~~
-http://localhost/basic/web/
-~~~
+Формат маршрутов для доступа к методам, а также формат ответа и запросов мы предоставляем Вам реализовать и выбрать самим.
+Пункты отмеченные курсивом являются не обязательными для выполнения, но их выполнение будет плюсом.
 
-### Install from an Archive File
+1. Спроектировать базу данных и развернуть ее при помощи миграций
+2. Выполнить конфигурацию веб-сервера (любого)
+3. Реализовать API согласно ТЗ
+4. Реализовать вывод данных в отдельном контроллере в виде таблицы с подгрузкой данных при помощи ajax (данные выбрать на свое усмотрение)
+5. Подготовить тестовые данные (дамп базы, скрипт для генерации тестового
+набора данных)
+6. Опубликовать/развернуть приложение, предоставить нам ссылки по которым можно протестировать работу сервиса: выложить работающее приложение на любой хостинг, а код на публичный репозиторий. В описании репозитория показать список методов, реализованных в API.
 
-Extract the archive file downloaded from [yiiframework.com](http://www.yiiframework.com/download/) to
-a directory named `basic` that is directly under the Web root.
+Если у Вас есть желание продемонстрировать знание какой-то технологии или подхода, то можно реализовать произвольную дополнительную функциональность на Ваше усмотрение.
 
-Set cookie validation key in `config/web.php` file to some random secret string:
 
-```php
-'request' => [
-    // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-    'cookieValidationKey' => '<secret random string goes here>',
-],
-```
-
-You can then access the application through the following URL:
-
-~~~
-http://localhost/basic/web/
-~~~
-
-
-### Install with Docker
-
-Update your vendor packages
-
-    docker-compose run --rm php composer update --prefer-dist
-    
-Run the installation triggers (creating cookie validation code)
-
-    docker-compose run --rm php composer install    
-    
-Start the container
-
-    docker-compose up -d
-    
-You can then access the application through the following URL:
-
-    http://127.0.0.1:8000
-
-**NOTES:** 
-- Minimum required Docker engine version `17.04` for development (see [Performance tuning for volume mounts](https://docs.docker.com/docker-for-mac/osxfs-caching/))
-- The default configuration uses a host-volume in your home directory `.docker-composer` for composer caches
-
-
-CONFIGURATION
--------------
-
-### Database
-
-Edit the file `config/db.php` with real data, for example:
-
-```php
-return [
-    'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=yii2basic',
-    'username' => 'root',
-    'password' => '1234',
-    'charset' => 'utf8',
-];
-```
-
-**NOTES:**
-- Yii won't create the database for you, this has to be done manually before you can access it.
-- Check and edit the other files in the `config/` directory to customize your application as required.
-- Refer to the README in the `tests` directory for information specific to basic application tests.
-
-
-TESTING
--------
-
-Tests are located in `tests` directory. They are developed with [Codeception PHP Testing Framework](http://codeception.com/).
-By default there are 3 test suites:
-
-- `unit`
-- `functional`
-- `acceptance`
-
-Tests can be executed by running
-
-```
-vendor/bin/codecept run
-```
-
-The command above will execute unit and functional tests. Unit tests are testing the system components, while functional
-tests are for testing user interaction. Acceptance tests are disabled by default as they require additional setup since
-they perform testing in real browser. 
-
-
-### Running  acceptance tests
-
-To execute acceptance tests do the following:  
-
-1. Rename `tests/acceptance.suite.yml.example` to `tests/acceptance.suite.yml` to enable suite configuration
-
-2. Replace `codeception/base` package in `composer.json` with `codeception/codeception` to install full featured
-   version of Codeception
-
-3. Update dependencies with Composer 
-
-    ```
-    composer update  
-    ```
-
-4. Download [Selenium Server](http://www.seleniumhq.org/download/) and launch it:
-
-    ```
-    java -jar ~/selenium-server-standalone-x.xx.x.jar
-    ```
-
-    In case of using Selenium Server 3.0 with Firefox browser since v48 or Google Chrome since v53 you must download [GeckoDriver](https://github.com/mozilla/geckodriver/releases) or [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads) and launch Selenium with it:
-
-    ```
-    # for Firefox
-    java -jar -Dwebdriver.gecko.driver=~/geckodriver ~/selenium-server-standalone-3.xx.x.jar
-    
-    # for Google Chrome
-    java -jar -Dwebdriver.chrome.driver=~/chromedriver ~/selenium-server-standalone-3.xx.x.jar
-    ``` 
-    
-    As an alternative way you can use already configured Docker container with older versions of Selenium and Firefox:
-    
-    ```
-    docker run --net=host selenium/standalone-firefox:2.53.0
-    ```
-
-5. (Optional) Create `yii2_basic_tests` database and update it by applying migrations if you have them.
-
-   ```
-   tests/bin/yii migrate
-   ```
-
-   The database configuration can be found at `config/test_db.php`.
-
-
-6. Start web server:
-
-    ```
-    tests/bin/yii serve
-    ```
-
-7. Now you can run all available tests
-
-   ```
-   # run all available tests
-   vendor/bin/codecept run
-
-   # run acceptance tests
-   vendor/bin/codecept run acceptance
-
-   # run only unit and functional tests
-   vendor/bin/codecept run unit,functional
-   ```
-
-### Code coverage support
-
-By default, code coverage is disabled in `codeception.yml` configuration file, you should uncomment needed rows to be able
-to collect code coverage. You can run your tests and collect coverage with the following command:
-
-```
-#collect coverage for all tests
-vendor/bin/codecept run -- --coverage-html --coverage-xml
-
-#collect coverage only for unit tests
-vendor/bin/codecept run unit -- --coverage-html --coverage-xml
-
-#collect coverage for unit and functional tests
-vendor/bin/codecept run functional,unit -- --coverage-html --coverage-xml
-```
-
-You can see code coverage output under the `tests/_output` directory.
+Используемые технологии
+	
+При выполнении задания требуется использовать следующие технологии:
+    • операционная система Ubuntu (или любая другая *nix система, но не
+Windows);
+    • язык программирования PHP
+    • для реализации использовать фреймворк Yii2
+    • система контроля версий - Git
+    • база данных MongoDB или Mysql
+    • желательно оформить код по стандартам PSR
