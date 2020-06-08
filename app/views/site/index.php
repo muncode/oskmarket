@@ -19,7 +19,7 @@ $this->title = 'My Yii Application';
 
 
         <!-- Вывод Новостей по авторам -->
-
+        Все новости автора:
         <select id="authors_option" onClick="ajaxload()">
             <option disabled>Выберите автора</option>
         </select>
@@ -51,7 +51,7 @@ $this->title = 'My Yii Application';
         <div id="authors"></div>
 
         <!-- Вывод Новостей по рубрикам -->
-
+        Все новости рубрики:
         <select id="category_option" onClick="ajaxload2()">
             <option disabled>Выберите автора</option>
         </select>
@@ -103,7 +103,7 @@ $this->title = 'My Yii Application';
         <div id="authors2"></div>
 
         <!-- Новости по id -->
-
+        Поиск новости
         <select id="news_option" onClick="ajaxload4()">
             <option disabled>Выберите автора</option>
         </select>
@@ -116,9 +116,6 @@ $this->title = 'My Yii Application';
                 });
             });
         </script>
-        <select id="news_option" onClick="ajaxload4()">
-            <option disabled>Выберите автора</option>
-        </select>
         <script type="text/javascript">
             function ajaxload4(){
                 let val = $("#news_option").val();
